@@ -1,0 +1,9 @@
+Django==4.2.4
+djangorestframework==3.14.0
+pytz==2023.3
+sqlparse==0.4.4
+djangorestframework==3.14.0
+Pillow==10.0.1
+django-filter
+drf-extra-fields
+djoser==2.1.0
