@@ -86,7 +86,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
                 return Response(
                     {'message': 'Рецепт успешно удален из избранного'},
                     status=status.HTTP_204_NO_CONTENT)
-            except:
+            except Exception:
                 return Response({'errors': 'Объект не найден'},
                                 status=status.HTTP_400_BAD_REQUEST)
 
@@ -113,7 +113,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
                     serializer.data,
                     status=status.HTTP_201_CREATED
                 )
-            except:
+            except Exception:
                 return Response(
                     serializer.errors,
                     status=status.HTTP_400_BAD_REQUEST
@@ -129,7 +129,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
                     {'message': 'Рецепт успешно удален из списка покупок'},
                     status=status.HTTP_204_NO_CONTENT
                 )
-            except:
+            except Exception:
                 return Response({'errors': 'Объект не найден'},
                                 status=status.HTTP_400_BAD_REQUEST)
 
@@ -208,7 +208,7 @@ class UserViewSet(UserViewSet):
                     {'message': 'Вы отписались от этого автора'},
                     status=status.HTTP_204_NO_CONTENT
                 )
-            except:
+            except Exception:
                 return Response({'errors': 'Объект не найден'},
                                 status=status.HTTP_400_BAD_REQUEST)
 
