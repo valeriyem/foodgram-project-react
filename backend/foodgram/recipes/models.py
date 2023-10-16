@@ -1,8 +1,9 @@
-from django.db import models
 from django.contrib.auth import get_user_model
 from django.core.validators import MaxValueValidator, MinValueValidator
+from django.db import models
 
 User = get_user_model()
+
 
 class Tag(models.Model):
     name = models.CharField(
@@ -44,13 +45,13 @@ class Ingredient(models.Model):
 class Recipe(models.Model):
     author = models.ForeignKey(
         User,
-        verbose_name = 'Автор',
+        verbose_name='Автор',
         on_delete=models.CASCADE,
-        blank = False,
-        related_name = 'recipes',
+        blank=False,
+        related_name='recipes',
     )
     name = models.CharField(
-        verbose_name = 'Название рецепта',
+        verbose_name='Название рецепта',
         max_length=150,
         blank=False,
     )
@@ -72,12 +73,11 @@ class Recipe(models.Model):
         Tag,
         blank=False,
         null=True,
-        through = 'RecipeTags'
+        through='RecipeTags'
     )
     cooking_time = models.PositiveIntegerField(
         verbose_name='время приготовления(мин)',
         blank=False,
-        # default=15,
         validators=[
             MinValueValidator(1),
             MaxValueValidator(100)
@@ -100,7 +100,7 @@ class RecipeIngredients(models.Model):
     )
     amount = models.PositiveIntegerField(
         verbose_name='Количество',
-        validators = [
+        validators=[
             MinValueValidator(1),
             MaxValueValidator(100)
         ],
@@ -162,12 +162,8 @@ class ShoppingCart(models.Model):
     )
 
     class Meta:
-        verbose_name='Список покупок'
-        verbose_name_plural='Списки покупок'
+        verbose_name = 'Список покупок'
+        verbose_name_plural = 'Списки покупок'
 
     def __str__(self):
         return f'{self.user} добавил {self.recipe} в списки покупок!'
-
-
-
-
