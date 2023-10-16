@@ -201,15 +201,6 @@ class CreateRecipeSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(
                 'Рецепт не может быть создан без ингредиентов.'
             )
-        # list_ingredients = []
-        # for value in ingredient_amount:
-        #     ingredient_object = get_object_or_404(
-        #     Ingredient, pk=value.get('id'))
-        #     if ingredient_object in list_ingredients:
-        #         raise serializers.ValidationError(
-        #         'Рецпет не может иметь двух одинковых ингредиентов.'
-        #         )
-        #     list_ingredients.append(ingredient_object)
         if not tags_amount:
             raise serializers.ValidationError(
                 'Рецепт не может быть создан без тэгов.'
@@ -218,13 +209,6 @@ class CreateRecipeSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(
                 'Рецепт не может быть создан без картинки'
             )
-        # list_tags = []
-        # for value_tag in tags_amount:
-        #     tag_object = get_object_or_404(Tag, pk=value_tag.get('id'))
-        #     if tag_object in list_tags:
-        #         raise serializers.ValidationError(
-        #         'Рецпет не может иметь двух одинковых тэгов.')
-        #     list_tags.append(tag_object)
         return data
 
     @staticmethod
