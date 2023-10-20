@@ -5,15 +5,20 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('recipes', '0004_shoppingcart'),
+        ("recipes", "0004_shoppingcart"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='recipe',
-            name='cooking_time',
-            field=models.PositiveIntegerField(validators=[django.core.validators.MinValueValidator(1), django.core.validators.MaxValueValidator(100)], verbose_name='время приготовления(мин)'),
+            model_name="recipe",
+            name="cooking_time",
+            field=models.PositiveIntegerField(
+                validators=[
+                    django.core.validators.MinValueValidator(1),
+                    django.core.validators.MaxValueValidator(100),
+                ],
+                verbose_name="время приготовления(мин)",
+            ),
         ),
     ]

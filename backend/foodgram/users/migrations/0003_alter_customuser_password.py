@@ -4,15 +4,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('users', '0002_follow_follow_user_author_unique'),
+        ("users", "0002_follow_follow_user_author_unique"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='customuser',
-            name='password',
-            field=models.CharField(max_length=150, verbose_name='Пароль'),
+            model_name="customuser",
+            name="password",
+            field=models.CharField(max_length=150, verbose_name="Пароль"),
         ),
     ]

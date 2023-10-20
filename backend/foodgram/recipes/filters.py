@@ -5,8 +5,8 @@ from .models import Ingredient
 
 
 class IngredientSearchFilter(SearchFilter):
-    name = filters.CharFilter(lookup_expr='startswith')
+    name = filters.CharFilter(lookup_expr="startswith")
 
     class Meta:
         model = Ingredient
-        field = ['name']
+        field = ["name"]
