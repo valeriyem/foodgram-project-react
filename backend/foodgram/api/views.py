@@ -65,7 +65,8 @@ class RecipeViewSet(viewsets.ModelViewSet):
             return ReadRecipeSerializer
         return CreateRecipeSerializer
 
-    def __post_delete_func(self, request, pk, serializer_param, model, message):
+    def __post_delete_func(self, request, pk,
+                           serializer_param, model, message):
         if request.method == "POST":
             context = {"request": request}
             recipe = get_object_or_404(Recipe, id=pk)
@@ -74,20 +75,26 @@ class RecipeViewSet(viewsets.ModelViewSet):
             try:
                 serializer.is_valid(raise_exception=True)
                 serializer.save()
-                return Response(serializer.data, status=status.HTTP_201_CREATED)
+                return Response(serializer.data,
+                                status=status.HTTP_201_CREATED)
             except Exception:
-                return Response(serializer.error, status=status.HTTP_400_BAD_REQUEST)
+                return Response(serializer.error,
+                                status=status.HTTP_400_BAD_REQUEST)
         if request.method == "DELETE":
             recipe = get_object_or_404(Recipe, pk=pk)
             try:
-                obj = get_object_or_404(model, user=request.user.id, recipe=recipe)
+                obj = get_object_or_404(model,
+                                        user=request.user.id,
+                                        recipe=recipe)
                 obj.delete()
                 return Response(
-                    {"message": {message}}, status=status.HTTP_204_NO_CONTENT
+                    {"message": {message}},
+                    status=status.HTTP_204_NO_CONTENT
                 )
             except Exception:
                 return Response(
-                    {"errors": "Объект не найден"}, status=status.HTTP_400_BAD_REQUEST
+                    {"errors": "Объект не найден"},
+                    status=status.HTTP_400_BAD_REQUEST
                 )
 
     @action(
@@ -113,18 +120,27 @@ class RecipeViewSet(viewsets.ModelViewSet):
         )
 
     @action(
-        methods=["GET"], detail=False, permission_classes=(permissions.IsAuthenticated,)
+        methods=["GET"],
+        detail=False,
+        permission_classes=(permissions.IsAuthenticated,)
     )
     def download_shopping_cart(self, request):
         objects = RecipeIngredients.objects.filter(
             recipe__shopping_cart_recipe__user=request.user
         )
         response = HttpResponse(content_type="text/csv")
-        response["Content-Disposition"] = "attachment; " "filename=shopping_cart.csv"
+        response["Content-Disposition"] = "attachment; " \
+                                          "" "filename=shopping_cart.csv"
         writer = csv.writer(response)
-        writer.writerow(["Recipe", "Ingredient_name", "Amount", "measurement_unit"])
+        writer.writerow(["Recipe",
+                         "Ingredient_name",
+                         "Amount",
+                         "measurement_unit"])
         object_fields = objects.values_list(
-            "recipe__name", "ingredient__name", "amount", "ingredient__measurement_unit"
+            "recipe__name",
+            "ingredient__name",
+            "amount",
+            "ingredient__measurement_unit"
         )
         for object in object_fields:
             writer.writerow(object)
@@ -162,18 +178,21 @@ class UserViewSet(UserViewSet):
             serializer.is_valid(raise_exception=True)
             serializer.save()
             author_serializer = SubscribeResponseSerializer(author)
-            return Response(author_serializer.data, status=status.HTTP_201_CREATED)
+            return Response(author_serializer.data,
+                            status=status.HTTP_201_CREATED)
         if request.method == "DELETE":
             author = get_object_or_404(User, id=id)
             try:
-                Follow.objects.get(author=author, user=request.user.id).delete()
+                Follow.objects.get(author=author,
+                                   user=request.user.id).delete()
                 return Response(
                     {"message": "Вы отписались от этого автора"},
                     status=status.HTTP_204_NO_CONTENT,
                 )
             except Exception:
                 return Response(
-                    {"errors": "Объект не найден"}, status=status.HTTP_400_BAD_REQUEST
+                    {"errors": "Объект не найден"},
+                    status=status.HTTP_400_BAD_REQUEST
                 )
 
     @action(
@@ -191,13 +210,18 @@ class UserViewSet(UserViewSet):
         return self.get_paginated_response(serializer.data)
 
     @action(
-        detail=True, permission_classes=(permissions.IsAuthenticated,), methods=("get",)
+        detail=True,
+        permission_classes=(permissions.IsAuthenticated,),
+        methods=("get",)
     )
     def users(self, request, pk):
         if request.user.is_authenticated:
             users = User.objects.filter(pk=pk)
-            serializer = ProfileReadSerializer(user=users, context={"request": request})
-            return Response(serializer.data, status=status.HTTP_204_NO_CONTENT)
+            serializer = ProfileReadSerializer(
+                user=users,
+                context={"request": request})
+            return Response(serializer.data,
+                            status=status.HTTP_204_NO_CONTENT)
 
     @action(
         detail=False,
@@ -211,6 +235,8 @@ class UserViewSet(UserViewSet):
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response(
-                {"message": "Пароль успешно изменен"}, status=status.HTTP_204_NO_CONTENT
+                {"message": "Пароль успешно изменен"},
+                status=status.HTTP_204_NO_CONTENT
             )
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.errors,
+                        status=status.HTTP_400_BAD_REQUEST)

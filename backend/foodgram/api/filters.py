@@ -12,8 +12,10 @@ class IngredientSearchFilter(FilterSet):
 
 
 class RecipeFilter(FilterSet):
-    is_favorited = filters.NumberFilter(method="get_is_favorited")
-    is_in_shopping_cart = filters.NumberFilter(method="get_is_in_shopping_cart")
+    is_favorited = filters.NumberFilter(
+        method="get_is_favorited")
+    is_in_shopping_cart = filters.NumberFilter(
+        method="get_is_in_shopping_cart")
     tags = filters.ModelMultipleChoiceFilter(
         field_name="tags__slug",
         to_field_name="slug",
