@@ -111,6 +111,8 @@ class RecipeViewSet(viewsets.ModelViewSet):
     @action(
         detail=True,
         permission_classes=(permissions.IsAuthenticated,),
+        url_path='shopping_cart',
+        url_name='shopping_cart',
         methods=["POST", "DELETE"],
     )
     def shopping_cart(self, request, pk):
